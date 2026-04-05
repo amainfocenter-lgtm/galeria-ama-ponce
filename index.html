@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Las Calles de AMA Contigo — Galería</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--y:#FFD700;--yh:#FFC000;--r:#CC2200;--w:#5C2D0E;--c:#FFF8E7;--naranja:#E07B2A}
+body{background:var(--w);font-family:Nunito,sans-serif;color:var(--c);min-height:100vh}
+
+/* GATE */
+#gate{position:fixed;inset:0;background:linear-gradient(180deg,#7A3B12,#5C2D0E);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.gt{font-family:'Bebas Neue',sans-serif;color:var(--y);text-shadow:3px 3px 8px rgba(0,0,0,.6);margin-bottom:8px}
+.gt .a{font-size:clamp(20px,5vw,28px);display:block}
+.gt .b{font-size:clamp(50px,12vw,75px);display:block;line-height:.85}
+.gt .c{font-size:clamp(58px,14vw,88px);display:block;line-height:.85}
+.gt .d{font-size:clamp(48px,11vw,75px);display:block;line-height:.9}
+.gsub{background:var(--y);color:#333;font-size:10px;font-weight:900;letter-spacing:3px;padding:3px 14px;margin:10px 0 24px;display:inline-block;text-transform:uppercase}
+.glbl{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;opacity:.6;display:block;margin-bottom:8px;text-align:left;width:100%;max-width:320px}
+.grow{display:flex;width:100%;max-width:320px}
+.grow input{flex:1;background:rgba(0,0,0,.3);border:2px solid rgba(255,215,0,.3);border-right:none;color:var(--c);font-family:Nunito,sans-serif;font-size:18px;font-weight:700;padding:12px 14px;outline:none;letter-spacing:4px;transition:border-color .2s}
+.grow input:focus{border-color:var(--y)}
+.grow input::placeholder{opacity:.3;font-size:14px;letter-spacing:2px}
+.grow button{background:var(--y);color:#333;border:none;padding:12px 18px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer}
+.grow button:hover{background:var(--yh)}
+.gerr{color:#FFB3B3;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:7px;min-height:18px;text-align:left;width:100%;max-width:320px}
+.ghint{margin-top:14px;font-size:11px;opacity:.4;letter-spacing:2px}
+
+/* APP */
+#app{display:none}
+.ban{height:36px;background:#4A2008;display:flex;align-items:flex-start;justify-content:center;overflow:hidden;position:relative}
+.ban::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,#E84545 0,#E84545 30px,#4A90D9 30px,#4A90D9 60px,#F5A623 60px,#F5A623 90px,#27AE60 90px,#27AE60 120px)}
+.flag{width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:28px solid #E84545;margin:0 2px}
+.flag:nth-child(2n){border-top-color:#4A90D9}.flag:nth-child(3n){border-top-color:#F5A623}.flag:nth-child(4n){border-top-color:#27AE60}.flag:nth-child(5n){border-top-color:#9B59B6}
+header{background:linear-gradient(180deg,#7A3B12,#8B4513 60%,#6B3410);padding:18px 16px 14px;text-align:center;border-bottom:4px solid #4A2008;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.ht{font-family:'Bebas Neue',sans-serif;color:var(--y);text-shadow:3px 3px 8px rgba(0,0,0,.6)}
+.ht .a{font-size:clamp(18px,4vw,26px);display:block}
+.ht .b{font-size:clamp(44px,10vw,68px);display:block;line-height:.85}
+.ht .c{font-size:clamp(52px,12vw,82px);display:block;line-height:.85}
+.ht .d{font-size:clamp(42px,10vw,68px);display:block;line-height:.9}
+.hsub{background:var(--y);color:#333;font-size:10px;font-weight:900;letter-spacing:3px;padding:3px 14px;margin:6px 0 4px;display:inline-block;text-transform:uppercase}
+.hinfo{font-size:12px;font-weight:700;opacity:.8}
+.luces{padding:5px 0;background:rgba(0,0,0,.2);display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.luz{width:11px;height:15px;border-radius:50% 50% 40% 40%;box-shadow:0 0 8px currentColor;animation:pk 2s infinite}
+.luz:nth-child(odd){animation-delay:.5s}.luz:nth-child(3n){animation-delay:1s}
+@keyframes pk{0%,90%,100%{opacity:1}45%{opacity:.3}}
+.strip{background:rgba(0,0,0,.25);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:2px solid rgba(0,0,0,.3)}
+.stats{display:flex;gap:20px}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;color:var(--y)}
+.sl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.bup{display:inline-flex;align-items:center;gap:6px;background:var(--y);color:#333;border:none;padding:10px 16px;font-family:Nunito,sans-serif;font-size:13px;font-weight:900;cursor:pointer;border-radius:4px;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,.4);transition:background .2s}
+.bup:hover{background:var(--yh)}
+.bslide{display:inline-flex;align-items:center;gap:6px;background:var(--naranja);color:#fff;border:none;padding:10px 16px;font-family:Nunito,sans-serif;font-size:13px;font-weight:900;cursor:pointer;border-radius:4px;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,.4);transition:background .2s}
+.bslide:hover{background:#c9691e}
+.fbar{padding:8px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(0,0,0,.15);border-bottom:1px solid rgba(0,0,0,.2)}
+.flbl{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.5}
+.fbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--c);padding:5px 14px;font-family:Nunito,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;border-radius:20px;transition:all .2s}
+.fbtn:hover{border-color:var(--y)}.fbtn.on{background:var(--y);border-color:var(--y);color:#333}
+#smsg{text-align:center;padding:10px;font-size:12px;opacity:.6;letter-spacing:1px}
+.gwrap{padding:14px}
+.gg{columns:3;column-gap:10px}
+@media(max-width:600px){.gg{columns:2}}
+@media(max-width:360px){.gg{columns:1}}
+.gi{break-inside:avoid;margin-bottom:10px;position:relative;cursor:pointer;overflow:hidden;border-radius:6px;box-shadow:0 3px 12px rgba(0,0,0,.5);animation:pi .4s ease both}
+@keyframes pi{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.gi img{width:100%;display:block;transition:transform .3s}
+.gi:hover img{transform:scale(1.05)}
+.gov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent 55%);opacity:0;transition:opacity .3s;padding:10px;display:flex;flex-direction:column;justify-content:flex-end}
+.gi:hover .gov{opacity:1}
+.gn{font-size:12px;font-weight:900;color:var(--y)}
+.gt2{font-size:10px;color:rgba(255,255,255,.6)}
+.gdel{position:absolute;top:6px;right:6px;background:var(--r);color:#fff;border:none;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:900;z-index:10}
+.gi:hover .gdel{display:flex}
+.empty{text-align:center;padding:50px 20px;column-span:all}
+.empty .ei{font-size:56px;margin-bottom:12px}
+.empty h3{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--y);margin-bottom:8px}
+.empty p{font-size:13px;opacity:.6;margin-bottom:18px}
+
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:500;display:none;align-items:center;justify-content:center;flex-direction:column;padding:14px}
+#lb.on{display:flex}
+#lb img{max-width:90vw;max-height:72vh;object-fit:contain;border-radius:8px;animation:pi .3s ease}
+.lbi{margin-top:10px;text-align:center}
+.lbn{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--y)}
+.lbt{font-size:11px;opacity:.5;margin-top:2px}
+.lbx{position:fixed;top:14px;right:14px;background:var(--r);color:#fff;border:none;width:38px;height:38px;font-size:18px;cursor:pointer;border-radius:50%;font-weight:900}
+.lbnav{display:flex;gap:10px;margin-top:12px}
+.lbb{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--c);padding:7px 16px;font-family:Nunito,sans-serif;font-size:13px;font-weight:700;cursor:pointer;border-radius:20px;transition:all .2s;text-decoration:none;display:inline-block}
+.lbb:hover{background:var(--y);color:#333;border-color:var(--y)}
+
+/* SLIDESHOW */
+#sl{position:fixed;inset:0;background:#000;z-index:600;display:none;flex-direction:column;align-items:center;justify-content:center}
+#sl.on{display:flex}
+.sl-img{max-width:100vw;max-height:80vh;object-fit:contain;animation:fade-sl .8s ease}
+@keyframes fade-sl{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.sl-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(to top,rgba(0,0,0,.9),transparent)}
+.sl-info{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--y);letter-spacing:2px}
+.sl-sub{font-size:11px;opacity:.6;letter-spacing:2px;margin-bottom:4px}
+.sl-name{font-size:13px;font-weight:700;color:var(--c);opacity:.8}
+.sl-counter{position:absolute;top:16px;left:16px;font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--y);letter-spacing:2px;background:rgba(0,0,0,.5);padding:4px 12px;border-radius:20px}
+.sl-close{position:fixed;top:14px;right:14px;background:var(--r);color:#fff;border:none;width:38px;height:38px;font-size:18px;cursor:pointer;border-radius:50%;font-weight:900;z-index:10}
+.sl-controls{position:absolute;bottom:90px;display:flex;gap:12px}
+.sl-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 18px;font-family:Nunito,sans-serif;font-size:13px;font-weight:700;cursor:pointer;border-radius:20px;transition:all .2s}
+.sl-btn:hover{background:var(--y);color:#333;border-color:var(--y)}
+.sl-play{background:var(--naranja);border-color:var(--naranja)}
+.sl-play:hover{background:#c9691e}
+
+/* MODAL */
+#nm{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:700;display:none;align-items:center;justify-content:center;padding:20px}
+#nm.on{display:flex}
+.nb{background:#7A3B12;border:3px solid var(--y);padding:24px 20px;width:100%;max-width:380px;border-radius:8px;animation:pi .3s ease}
+.nb h2{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--y);margin-bottom:5px;letter-spacing:2px}
+.nb p{font-size:12px;opacity:.7;margin-bottom:14px}
+.nb input{width:100%;background:rgba(0,0,0,.3);border:2px solid rgba(255,215,0,.3);color:var(--c);font-family:Nunito,sans-serif;font-size:16px;font-weight:700;padding:11px 13px;outline:none;margin-bottom:14px;border-radius:4px;transition:border-color .2s}
+.nb input:focus{border-color:var(--y)}
+.nb input::placeholder{opacity:.4}
+.na{display:flex;gap:10px}
+.bc{flex:1;background:var(--y);color:#333;border:none;padding:11px;font-family:Nunito,sans-serif;font-size:14px;font-weight:900;cursor:pointer;border-radius:4px;text-transform:uppercase}
+.bc:hover{background:var(--yh)}
+.bx2{background:rgba(255,255,255,.1);color:var(--c);border:1px solid rgba(255,255,255,.2);padding:11px 16px;font-family:Nunito,sans-serif;font-size:14px;font-weight:700;cursor:pointer;border-radius:4px}
+
+/* TOAST */
+.tst{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#7A3B12;border:2px solid var(--y);padding:12px 22px;z-index:800;display:none;min-width:240px;border-radius:8px;text-align:center}
+.tst.on{display:block;animation:pi .3s ease}
+.ttt{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--y);letter-spacing:2px;margin-bottom:6px}
+.tb{height:4px;background:rgba(0,0,0,.3);border-radius:2px;overflow:hidden}
+.tp{height:100%;background:var(--y);transition:width .3s;border-radius:2px}
+footer{background:#4A2008;padding:12px;text-align:center;font-size:11px;opacity:.4;letter-spacing:2px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gt" style="margin-bottom:8px">
+    <span class="a">Las</span>
+    <span class="b">CALLES</span>
+    <span class="a">de</span>
+    <span class="c">AMA</span>
+    <span class="d">CONTIGO</span>
+  </div>
+  <div class="gsub">Star Office Bootcamp • Galería</div>
+  <span class="glbl">Código de acceso</span>
+  <div class="grow">
+    <input type="password" id="pwd" placeholder="contraseña" maxlength="30" autocomplete="off">
+    <button onclick="chk()">Entrar</button>
+  </div>
+  <span class="gerr" id="gerr"></span>
+  <p class="ghint">17 de Abril 2026 • Aloft Ponce</p>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="ban" id="ban"></div>
+  <header>
+    <div class="ht">
+      <span class="a">Las</span>
+      <span class="b">CALLES</span>
+      <span class="a">de</span>
+      <span class="c">AMA</span>
+      <span class="d">CONTIGO</span>
+    </div>
+    <div class="hsub">Star Office Bootcamp • Galería Oficial</div>
+    <div class="hinfo">10 de Abril 2026 • Hyatt Centric, San Juan</div>
+  </header>
+  <div class="luces" id="luces"></div>
+  <div class="strip">
+    <div class="stats">
+      <div><div class="sn" id="st">0</div><div class="sl">Fotos</div></div>
+      <div><div class="sn" id="sp">0</div><div class="sl">Personas</div></div>
+    </div>
+    <div class="btns">
+      <input type="file" id="fi" accept="image/*" multiple style="display:none">
+      <button class="bup" id="ub">📷 Subir fotos</button>
+      <button class="bslide" id="sb">▶ Slideshow</button>
+    </div>
+  </div>
+  <div class="fbar">
+    <span class="flbl">Ver:</span>
+    <button class="fbtn on" onclick="sf('all',this)">Todas</button>
+    <button class="fbtn" onclick="sf('mine',this)">Las mías</button>
+  </div>
+  <div id="smsg">Cargando fotos...</div>
+  <div class="gwrap"><div class="gg" id="gg"></div></div>
+  <footer>Las Calles de AMA Contigo 2026 • Galería Oficial</footer>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button class="lbx" onclick="clb()">✕</button>
+  <img id="lbimg" src="" alt="">
+  <div class="lbi">
+    <div class="lbn" id="lbn"></div>
+    <div class="lbt" id="lbt"></div>
+  </div>
+  <div class="lbnav">
+    <button class="lbb" onclick="nlb(-1)">← Anterior</button>
+    <a id="lbdl" class="lbb" download="foto-ama.jpg">⬇ Descargar</a>
+    <button class="lbb" onclick="nlb(1)">Siguiente →</button>
+  </div>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="sl">
+  <button class="sl-close" onclick="csl()">✕</button>
+  <div class="sl-counter" id="sl-counter">1 / 1</div>
+  <img class="sl-img" id="sl-img" src="" alt="">
+  <div class="sl-overlay">
+    <div class="sl-info">LAS CALLES DE AMA CONTIGO</div>
+    <div class="sl-sub">STAR OFFICE BOOTCAMP • 10 ABRIL 2026</div>
+    <div class="sl-name" id="sl-name"></div>
+  </div>
+  <div class="sl-controls">
+    <button class="sl-btn" onclick="nsl(-1)">← Anterior</button>
+    <button class="sl-btn sl-play" id="sl-play-btn" onclick="togglePlay()">⏸ Pausar</button>
+    <button class="sl-btn" onclick="nsl(1)">Siguiente →</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="nm">
+  <div class="nb">
+    <h2>¿Quién comparte?</h2>
+    <p id="md">Escribe tu nombre</p>
+    <input type="text" id="ni" placeholder="Tu nombre o apodo" maxlength="40">
+    <div class="na">
+      <button class="bx2" onclick="cu()">Cancelar</button>
+      <button class="bc" onclick="ok()">📷 Compartir</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="tst" id="tst">
+  <div class="ttt" id="ttt">Subiendo... 📷</div>
+  <div class="tb"><div class="tp" id="tp" style="width:0%"></div></div>
+</div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getFirestore,collection,addDoc,onSnapshot,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const fc={
+  apiKey:"AIzaSyDMiwQ4kBgdXuhHrYSSkjsG2TdrlULAlCA",
+  authDomain:"las-calles-ama-contigo-2026.firebaseapp.com",
+  projectId:"las-calles-ama-contigo-2026",
+  storageBucket:"las-calles-ama-contigo-2026.firebasestorage.app",
+  messagingSenderId:"978923834581",
+  appId:"1:978923834581:web:b895849b2091e1474e665c"
+};
+
+const db=getFirestore(initializeApp(fc));
+const PASS="amacalles2026", ADMIN="amaadmin2026", MK="ama_uid7", NK="ama_name7";
+let isAdmin=false;
+let photos=[],flt=[],pend=[],cf='all',li=0;
+let mid=localStorage.getItem(MK)||gid();
+let savedName=localStorage.getItem(NK)||'';
+localStorage.setItem(MK,mid);
+let slIdx=0,slPlaying=true,slTimer=null;
+
+function gid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,6)}
+
+function deco(){
+  const b=document.getElementById('ban');
+  const cols=['#E84545','#4A90D9','#F5A623','#27AE60','#9B59B6'];
+  for(let i=0;i<20;i++){const f=document.createElement('div');f.className='flag';f.style.borderTopColor=cols[i%5];b.appendChild(f);}
+  const l=document.getElementById('luces');
+  const lc=['#FF4444','#44FF44','#4444FF','#FFFF44','#FF44FF','#44FFFF'];
+  for(let i=0;i<22;i++){const x=document.createElement('div');x.className='luz';x.style.color=lc[i%6];x.style.backgroundColor=lc[i%6];x.style.animationDelay=(i*.13)+'s';l.appendChild(x);}
+}
+
+window.chk=function(){
+  const v=document.getElementById('pwd').value.trim();
+  if(v.toLowerCase()===ADMIN){
+    isAdmin=true;
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    // Mostrar banner admin
+    const banner=document.createElement('div');
+    banner.style.cssText='background:#CC2200;color:#fff;text-align:center;padding:6px;font-family:Bebas Neue,sans-serif;font-size:16px;letter-spacing:3px;';
+    banner.textContent='🔑 MODO ADMINISTRADOR';
+    document.getElementById('app').insertBefore(banner, document.getElementById('app').firstChild);
+    deco(); listen();
+  } else if(v.toLowerCase()===PASS){
+    isAdmin=false;
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    deco(); listen();
+  } else {
+    document.getElementById('gerr').textContent='❌ Código incorrecto.';
+    document.getElementById('pwd').value='';
+    setTimeout(()=>document.getElementById('gerr').textContent='',3000);
+  }
+};
+document.getElementById('pwd').addEventListener('keydown',e=>{if(e.key==='Enter')window.chk()});
+
+function listen(){
+  const q=query(collection(db,'fotos'),orderBy('ts','desc'));
+  onSnapshot(q,s=>{
+    photos=s.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('smsg').style.display='none';
+    render();
+  },e=>{document.getElementById('smsg').textContent='Error de conexión.';console.error(e)});
+}
+
+document.getElementById('ub').addEventListener('click',()=>document.getElementById('fi').click());
+document.getElementById('fi').addEventListener('change',e=>{
+  const f=Array.from(e.target.files);
+  if(!f.length)return;
+  pend=f;
+  document.getElementById('md').textContent='Vas a compartir '+f.length+' foto'+(f.length>1?'s':'');
+  document.getElementById('ni').value=savedName;
+  document.getElementById('nm').classList.add('on');
+  document.getElementById('ni').focus();
+  e.target.value='';
+});
+
+document.getElementById('sb').addEventListener('click',()=>{
+  if(!flt.length){alert('No hay fotos para mostrar.');return;}
+  slIdx=0; slPlaying=true;
+  document.getElementById('sl-play-btn').textContent='⏸ Pausar';
+  document.getElementById('sl').classList.add('on');
+  showSl(); startSlTimer();
+});
+
+function showSl(){
+  const p=flt[slIdx]; if(!p)return;
+  document.getElementById('sl-img').src=p.src;
+  document.getElementById('sl-name').textContent='📷 '+p.name+(p.dateStr?' • '+p.dateStr:'');
+  document.getElementById('sl-counter').textContent=(slIdx+1)+' / '+flt.length;
+}
+function startSlTimer(){
+  clearInterval(slTimer);
+  if(slPlaying) slTimer=setInterval(()=>{slIdx=(slIdx+1)%flt.length;showSl();},3500);
+}
+window.nsl=function(d){slIdx=(slIdx+d+flt.length)%flt.length;showSl();if(slPlaying)startSlTimer()};
+window.csl=function(){document.getElementById('sl').classList.remove('on');clearInterval(slTimer)};
+window.togglePlay=function(){
+  slPlaying=!slPlaying;
+  document.getElementById('sl-play-btn').textContent=slPlaying?'⏸ Pausar':'▶ Reproducir';
+  startSlTimer();
+};
+
+window.cu=()=>{pend=[];document.getElementById('nm').classList.remove('on')};
+window.ok=async function(){
+  const n=document.getElementById('ni').value.trim()||savedName||'Asistente anónimo';
+  savedName=n;
+  localStorage.setItem(NK,n);
+  document.getElementById('nm').classList.remove('on');
+  document.getElementById('ni').value='';
+  await up(pend,n); pend=[];
+};
+document.getElementById('ni').addEventListener('keydown',e=>{if(e.key==='Enter')window.ok()});
+
+async function up(files,name){
+  const tst=document.getElementById('tst'),tp=document.getElementById('tp'),ttt=document.getElementById('ttt');
+  tst.classList.add('on'); let done=0;
+  for(const f of files){
+    try{
+      ttt.textContent='Subiendo '+(done+1)+'/'+files.length+'... 📷';
+      const b64=await b64f(f);
+      const cmp=await cimg(b64,800);
+      await addDoc(collection(db,'fotos'),{
+        src:cmp, name, uploaderId:mid,
+        ts:serverTimestamp(),
+        dateStr:new Date().toLocaleString('es-PR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+      });
+      done++; tp.style.width=(done/files.length*100)+'%';
+    } catch(e){console.error(e);done++;}
+  }
+  ttt.textContent='¡Listo! 🎉';
+  setTimeout(()=>{tst.classList.remove('on');tp.style.width='0%'},2000);
+}
+
+function b64f(f){return new Promise((r,j)=>{const x=new FileReader();x.onload=()=>r(x.result);x.onerror=j;x.readAsDataURL(f)})}
+function cimg(b,mw){return new Promise(r=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');let w=i.width,h=i.height;if(w>mw){h=Math.round(h*mw/w);w=mw;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);r(c.toDataURL('image/jpeg',.72))};i.src=b})}
+
+window.sf=function(t,btn){
+  cf=t;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  render();
+};
+
+function render(){
+  flt=cf==='mine'?photos.filter(p=>p.uploaderId===mid):photos;
+  const g=document.getElementById('gg'); g.innerHTML='';
+  document.getElementById('st').textContent=photos.length;
+  document.getElementById('sp').textContent=new Set(photos.map(p=>p.uploaderId)).size;
+  if(!flt.length){
+    g.innerHTML='<div class="empty"><div class="ei">📷</div><h3>¡Sé el primero!</h3><p>'+(cf==='mine'?'Aún no has subido fotos':'Comparte los recuerdos de hoy')+'</p></div>';
+    return;
+  }
+  flt.forEach((p,i)=>{
+    const d=document.createElement('div'); d.className='gi';
+    d.style.animationDelay=Math.min(i*.05,.5)+'s';
+    const isMine = p.uploaderId===mid;
+    const canDelete = isMine || isAdmin;
+    d.innerHTML='<img src="'+p.src+'" loading="lazy"><div class="gov"><div class="gn">'+esc(p.name)+'</div><div class="gt2">'+(p.dateStr||'')+'</div></div>'+(canDelete?'<button class="gdel" title="Eliminar">✕</button>':'');
+    d.querySelector('img').onclick=()=>olb(i);
+    if(canDelete){
+      d.querySelector('.gdel').onclick=async(e)=>{
+        e.stopPropagation();
+        if(confirm('¿Eliminar esta foto?')){
+          const{doc,deleteDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+          await deleteDoc(doc(db,'fotos',p.id));
+        }
+      };
+    }
+    g.appendChild(d);
+  });
+}
+
+function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
+
+window.olb=function(i){li=i;slb();document.getElementById('lb').classList.add('on')};
+function slb(){
+  const p=flt[li]; if(!p)return;
+  document.getElementById('lbimg').src=p.src;
+  document.getElementById('lbn').textContent=p.name;
+  document.getElementById('lbt').textContent=p.dateStr||'';
+  document.getElementById('lbdl').href=p.src;
+}
+window.clb=()=>document.getElementById('lb').classList.remove('on');
+window.nlb=d=>{li=(li+d+flt.length)%flt.length;slb()};
+
+document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)window.clb()});
+document.getElementById('sl').addEventListener('click',function(e){if(e.target===this)window.csl()});
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lb').classList.contains('on')){
+    if(e.key==='ArrowLeft')window.nlb(-1);
+    if(e.key==='ArrowRight')window.nlb(1);
+    if(e.key==='Escape')window.clb();
+  }
+  if(document.getElementById('sl').classList.contains('on')){
+    if(e.key==='ArrowLeft')window.nsl(-1);
+    if(e.key==='ArrowRight')window.nsl(1);
+    if(e.key==='Escape')window.csl();
+  }
+});
+
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{
+  e.preventDefault();
+  if(document.getElementById('app').style.display==='none')return;
+  const f=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  if(!f.length)return;
+  pend=f;
+  document.getElementById('md').textContent='Vas a compartir '+f.length+' foto'+(f.length>1?'s':'');
+  document.getElementById('nm').classList.add('on');
+  document.getElementById('ni').focus();
+});
+</script>
+</body>
+</html>
